@@ -8,6 +8,8 @@ Local GGUF VLM + small-object detector for headless robotics and CLI use.
 
 **Status:** Draft / pre-`v0.1.0`. Public API is not yet stable.
 
+**Background:** used as the *perceive* step of a [self-driving-lab agent loop](https://qte77.github.io/open-self-driving-lab-agent-loop/).
+
 **Consumers (planned):**
 
 - [qte77/i3mega-pipettebot](https://github.com/qte77/i3mega-pipettebot) — overhead-cam pipetting anomaly detection.
