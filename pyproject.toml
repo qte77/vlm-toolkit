@@ -1,0 +1,93 @@
+[project]
+name = "vlm-toolkit"
+version = "0.0.0"
+description = "Local GGUF VLM + small-object detector for headless robotics"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "qte77" }]
+dependencies = ["pydantic-settings>=2.9.1", "Pillow>=10.0.0", "blake3>=0.4.0"]
+
+[project.optional-dependencies]
+# NOTE: llama-cpp-python is intentionally NOT an extra. Users install the
+# variant matching their hardware (CPU / CUDA / Metal / ROCm).
+# See docs/architecture.md §6.
+llamaserver = ["httpx>=0.27"]
+detector = ["ultralytics>=8.3.0"] # pulls torch — heavy, opt-in
+all = ["vlm-toolkit[llamaserver]", "vlm-toolkit[detector]"]
+dev = ["ruff>=0.15.10", "pyright>=1.1.409", "bump-my-version>=1.3.0"]
+test = ["pytest>=9.0.3", "pytest-cov>=6.0", "hypothesis>=6.100"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vlm_toolkit"]
+
+
+# MARK: Linting
+
+
+[tool.ruff]
+target-version = "py311"
+src = ["src", "tests"]
+line-length = 100
+extend-exclude = ["docs"] # illustrative snippets, not source
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["E501"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+
+# MARK: Type checking
+
+
+[tool.pyright]
+pythonVersion = "3.11"
+include = ["src"]
+typeCheckingMode = "strict"
+useLibraryCodeForTypes = false
+reportMissingTypeStubs = false
+
+
+# MARK: Testing
+
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers"
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+include = ["src/**/*.py"]
+
+[tool.coverage.report]
+show_missing = true
+
+
+# MARK: Version bumping
+
+
+[tool.bumpversion]
+current_version = "0.0.0"
+commit = true
+tag = true
+tag_name = "v{new_version}"
+allow_dirty = false
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "src/vlm_toolkit/__init__.py"
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'
