@@ -9,9 +9,10 @@ from __future__ import annotations
 
 import os
 import tomllib
-import urllib.request
+from http.client import HTTPSConnection
 from importlib.resources import files
 from typing import Any
+from urllib.parse import urljoin, urlsplit
 
 import pytest
 
@@ -57,6 +58,23 @@ def test_urls_are_https(url: str) -> None:
 )
 @pytest.mark.parametrize("url", _urls())
 def test_url_is_live(url: str) -> None:
-    request = urllib.request.Request(url, method="HEAD")
-    with urllib.request.urlopen(request, timeout=30) as response:  # noqa: S310 (https only, asserted above)
-        assert response.status == 200
+    assert _head_status(url) == 200
+
+
+def _head_status(url: str, max_redirects: int = 5) -> int:
+    """HEAD `url` over HTTPS only, following redirects; return the final status."""
+    for _ in range(max_redirects + 1):
+        parts = urlsplit(url)
+        assert parts.scheme == "https", f"refusing non-https URL: {url}"
+        conn = HTTPSConnection(parts.netloc, timeout=30)
+        try:
+            conn.request("HEAD", parts.path + (f"?{parts.query}" if parts.query else ""))
+            response = conn.getresponse()
+            location = response.getheader("Location")
+        finally:
+            conn.close()
+        if response.status not in (301, 302, 303, 307, 308) or not location:
+            return response.status
+        url = urljoin(url, location)
+    msg = f"too many redirects: {url}"
+    raise AssertionError(msg)
