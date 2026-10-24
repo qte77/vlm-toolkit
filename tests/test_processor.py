@@ -29,6 +29,11 @@ class TestResizeForVLM:
         result = resize_for_vlm(img, max_edge=768)
         assert result.size == (384, 768)
 
+    def test_extreme_aspect_keeps_short_side_at_least_1px(self) -> None:
+        # Found by Hypothesis: int() truncation used to produce a 0-px side.
+        img = Image.new("RGB", (1, 17))
+        assert resize_for_vlm(img, max_edge=16).size == (1, 16)
+
     def test_resize_square(self) -> None:
         img = Image.new("RGB", (1024, 1024))
         result = resize_for_vlm(img, max_edge=512)
