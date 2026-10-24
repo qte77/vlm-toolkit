@@ -21,7 +21,9 @@ def resize_for_vlm(img: Image.Image, max_edge: int = 768) -> Image.Image:
     if longest <= max_edge:
         return img
     scale = max_edge / longest
-    new_size = (int(width * scale), int(height * scale))
+    # Reason: clamp to 1px — extreme aspect ratios would truncate the short
+    # side to 0, which Pillow rejects.
+    new_size = (max(1, int(width * scale)), max(1, int(height * scale)))
     # Reason: Pillow's `size` annotation includes a numpy array type that is
     # Unknown when numpy is absent; our argument is a plain tuple[int, int].
     return img.resize(new_size, Image.Resampling.LANCZOS)  # pyright: ignore[reportUnknownMemberType]
