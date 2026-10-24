@@ -16,7 +16,8 @@ dependencies = ["pydantic-settings>=2.9.1", "Pillow>=10.0.0", "blake3>=0.4.0"]
 llamaserver = ["httpx>=0.27"]
 detector = ["ultralytics>=8.3.0"] # pulls torch — heavy, opt-in
 all = ["vlm-toolkit[llamaserver]", "vlm-toolkit[detector]"]
-dev = ["ruff>=0.15.10", "pyright>=1.1.409", "bump-my-version>=1.3.0"]
+# llamaserver (httpx) is light and lets pyright resolve the HTTP backend.
+dev = ["ruff>=0.15.10", "pyright>=1.1.409", "bump-my-version>=1.3.0", "vlm-toolkit[llamaserver]"]
 test = ["pytest>=9.0.3", "pytest-cov>=6.0", "hypothesis>=6.100"]
 
 [build-system]
