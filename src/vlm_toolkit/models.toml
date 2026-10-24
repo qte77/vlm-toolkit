@@ -1,0 +1,48 @@
+# Model registry — GGUF VLMs and YOLO detector weights.
+#
+# Each table is a model key. Required keys:
+#   title   — human-readable name for log lines
+#   engine  — "llamacpp" (in-process), "llamaserver" (HTTP) or "ultralytics" (detector)
+# Engine-specific keys:
+#   llamacpp    — model_url, mmproj_url, handler_name (llama-cpp-python chat handler)
+#   llamaserver — model_url, mmproj_url, server_url (loopback by default)
+#   ultralytics — weights_url
+#
+# Filenames are derived from URL basenames — never set them here.
+# URL liveness is checked by tests/test_models_registry.py (CI job `preflight-urls`).
+# VLM entries are lifted from cc-senses-plugin src/cc_vlm/models.toml (Apache-2.0, see NOTICE).
+
+# MARK: VLM
+
+[moondream]
+title = "Moondream2"
+engine = "llamacpp"
+handler_name = "moondream"
+model_url = "https://huggingface.co/moondream/moondream2-gguf/resolve/main/moondream2-text-model-f16.gguf"
+mmproj_url = "https://huggingface.co/moondream/moondream2-gguf/resolve/main/moondream2-mmproj-f16.gguf"
+
+[smolvlm]
+title = "SmolVLM-500M"
+engine = "llamaserver"
+server_url = "http://127.0.0.1:8080"
+model_url = "https://huggingface.co/ggml-org/SmolVLM-500M-Instruct-GGUF/resolve/main/SmolVLM-500M-Instruct-Q8_0.gguf"
+mmproj_url = "https://huggingface.co/ggml-org/SmolVLM-500M-Instruct-GGUF/resolve/main/mmproj-SmolVLM-500M-Instruct-Q8_0.gguf"
+
+[qwen3vl]
+title = "Qwen3-VL-2B"
+engine = "llamaserver"
+server_url = "http://127.0.0.1:8080"
+model_url = "https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct-GGUF/resolve/main/Qwen3VL-2B-Instruct-Q4_K_M.gguf"
+mmproj_url = "https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct-GGUF/resolve/main/mmproj-Qwen3VL-2B-Instruct-Q8_0.gguf"
+
+# MARK: Detector
+
+[yolo26n]
+title = "YOLO26 nano (2.4M params)"
+engine = "ultralytics"
+weights_url = "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26n.pt"
+
+[yolo26s]
+title = "YOLO26 small (9.5M params)"
+engine = "ultralytics"
+weights_url = "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26s.pt"
