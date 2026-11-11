@@ -1,0 +1,20 @@
+version: 2
+updates:
+  # GitHub Actions used in .github/workflows/*. No CodeQL workflow in this
+  # repo, so no separate github-codeql-action group is needed.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      actions-security-updates:
+        applies-to: security-updates
+        patterns:
+          - "*"
+      actions-version-updates:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
