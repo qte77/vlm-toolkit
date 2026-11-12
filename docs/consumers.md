@@ -1,6 +1,8 @@
 # Consumers — vlm-toolkit
 
-Draft integration plans for the two known downstream consumers. Each section ends with the **draft ADR text** to be copied into that consumer's `docs/adr/` when the consumer is ready to adopt the toolkit. ADRs are owned by their respective repos; this file is the upstream-side mirror so the toolkit knows who depends on it.
+> **Status:** both consumers below (`i3mega-pipettebot`, `so101-biolab-automation`) are archived; their drafts stay here for reference. The current planned consumer is [`qte77/agentic-cax-gauge`](https://github.com/qte77/agentic-cax-gauge) (optional VLM annotation, no draft yet).
+
+Draft integration plans for the two originally planned downstream consumers. Each section ends with the **draft ADR text** to be copied into that consumer's `docs/adr/` when the consumer is ready to adopt the toolkit. ADRs are owned by their respective repos; this file is the upstream-side mirror so the toolkit knows who depends on it.
 
 Cross-references to upstreams:
 
