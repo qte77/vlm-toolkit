@@ -12,8 +12,11 @@ Local GGUF VLM + small-object detector for headless robotics and CLI use.
 
 **Consumers (planned):**
 
-- [qte77/i3mega-pipettebot](https://github.com/qte77/i3mega-pipettebot) — overhead-cam pipetting anomaly detection.
-- [qte77/so101-biolab-automation](https://github.com/qte77/so101-biolab-automation) — dual SO-101 robot-arm perception.
+- [qte77/agentic-cax-gauge](https://github.com/qte77/agentic-cax-gauge) — optional VLM annotation of CAx renders.
+- [qte77/i3mega-pipettebot](https://github.com/qte77/i3mega-pipettebot) (archived) — overhead-cam pipetting anomaly detection; integration draft kept in [`docs/consumers.md`](docs/consumers.md).
+- [qte77/so101-biolab-automation](https://github.com/qte77/so101-biolab-automation) (archived) — dual SO-101 robot-arm perception; integration draft kept in [`docs/consumers.md`](docs/consumers.md).
+
+**Related:** [qte77/cc-senses-plugin](https://github.com/qte77/cc-senses-plugin) — the Claude Code plugin whose `cc_vlm` `processor.py`, `server_manager.py` and `models.toml` VLM entries were the starting point here; it keeps its own `cc_vlm/` (see [`docs/architecture.md`](docs/architecture.md)).
 
 - [`docs/architecture.md`](docs/architecture.md) — scope, locked decisions, public API, branch protection.
 - [`docs/UserStory.md`](docs/UserStory.md) — acceptance criteria for `v0.1.0`.
