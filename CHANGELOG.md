@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- CodeQL workflow (`.github/workflows/codeql.yaml`) scanning `python`, `actions` on every
+  push, weekly and on demand; actions pinned to full commit SHAs.
 - README lists `agentic-cax-gauge` as a planned consumer and links `cc-senses-plugin` as related; README and `docs/consumers.md` mark `i3mega-pipettebot` and `so101-biolab-automation` as archived.
 - Python scaffold: `pyproject.toml`, Apache-2.0 `LICENSE`, `NOTICE`, `.gitignore`, `ci` workflow.
 - `CODEOWNERS` and this `CHANGELOG.md`.
